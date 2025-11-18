@@ -73,6 +73,13 @@ Hello this is a test
 Output:
 { "summary": "This is a test message." }
 
+Example:
+<img width="1069" height="357" alt="Screenshot 2025-11-17 at 8 39 58 PM" src="https://github.com/user-attachments/assets/2d123045-db06-4cc6-ac5c-34f34416d68b" />
+
+
+<img width="1074" height="323" alt="Screenshot 2025-11-17 at 8 40 03 PM" src="https://github.com/user-attachments/assets/547cde39-3814-4855-b61b-14f5352bc4dd" />
+
+
 #### Performance
 Latency: ~300–700ms (Gemini API dependent), Container: 1 CPU, 1 GB RAM
 
