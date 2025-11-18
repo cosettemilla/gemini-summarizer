@@ -1,46 +1,31 @@
 Gemini Text Summarizer — Case Study
 1. Executive Summary
 Problem
-Students, researchers, and professionals frequently work with long academic texts, articles, and documents. Manually summarizing these materials is time-consuming and inefficient.
+
+Students, researchers, and professionals often work with long academic texts, articles, and research documents. Manually summarizing this material is time-consuming and inefficient.
 
 Solution
-This project provides a lightweight, cloud-hosted text-summarization API powered by Google Gemini. A user sends the API a block of text, and it returns a concise summary. The API runs inside a Docker container and is deployed on Azure Container Instances for scalable, on-demand access.
+
+This project provides a lightweight, cloud-hosted text-summarization API powered by Google Gemini. Users send the API a block of text and receive a concise summary.
+The application runs inside a Docker container and is deployed on Azure Container Instances (ACI) for scalable, on-demand access.
 
 2. System Overview
 Course Concepts Used
 
-Docker Containers – for consistent packaging and reproducible execution
+Docker containers
 
-Cloud Deployment (Azure Container Instances) – running containers in the cloud
+Azure Container Instances (ACI)
 
-APIs & Microservices – serving functionality through HTTP endpoints
+REST APIs & Microservices
 
-Secrets Management – environment variables for API keys
+Secrets management using environment variables
 
 Architecture Diagram
 
-(Place your architecture PNG in /assets and add it here, e.g.)
-
-![Architecture Diagram](assets/architecture.png)
-
-Data / Models / Services
-
-Google Gemini API
-
-Provides: text summarization
-
-Model called via: google-generativeai Python package
-
-Data format: JSON input containing arbitrary text
-
-Service Output
-
-JSON response with the generated summary
-
-No local datasets are stored; all summarization is done dynamically.
+(Add your architecture PNG to /assets and embed it here.)
 
 3. How to Run (Local)
-Environment Variable
+Set your environment variable
 export GEMINI_API_KEY="your_key_here"
 
 Build
@@ -55,50 +40,50 @@ curl http://localhost:8080/health
 4. Design Decisions
 Why These Tools?
 
-Docker: Ensures identical behavior across laptops, VMs, and cloud services.
+Docker: Ensures consistent, reproducible execution across environments.
 
-Azure Container Instances (ACI): Offers simple container hosting without managing servers.
+Azure Container Instances: Simplifies cloud deployment without managing VMs.
 
-Gemini API: Provides high-quality text summarization via a simple API.
+Google Gemini API: Provides fast, high-quality summarization.
 
 Alternatives Considered
 
-AWS ECS / Lambda – more complex setup for this project scope
+AWS ECS or Lambda (more complex for the course project)
 
-Local LLMs – too heavy, require GPUs
+Local LLMs (heavy compute requirements)
 
-Running directly on VM – less portable than containers
+VM deployment (less portable, harder to manage)
 
 Tradeoffs
 
-Cloud cost vs. local execution
+Cloud hosting costs vs. convenience
 
-Simplicity of single-container deployment vs. scalability limits
+Simpler architecture but limited long-term storage
 
-No database allows minimal complexity but limits long-term storage features
+Single container = low complexity but no autoscaling
 
-Security / Privacy
+Security & Privacy
 
-API key stored in environment variables (not committed to GitHub)
+API key stored via environment variables
 
-No user data stored on disk
+No user text is saved to disk
 
-Only text in request is processed and returned
+Only temporary request data is processed
 
 Operations
 
-Logging handled in container stdout (viewed via az container logs)
+Logs accessed via az container logs
 
-Container restarts automatically via ACI policy
+ACI restarts automatically
 
-Known limitation: cold-start time when redeployed
+Known limitation: cold start after redeployment
 
 5. Results & Evaluation
 Sample Output
 
 Input:
 
-"Hello this is a test"
+Hello this is a test
 
 
 Output:
@@ -109,36 +94,36 @@ Output:
 
 Performance
 
-Response latency: ~300–700ms (depends on Gemini API)
+Response latency: ~300–700 ms
 
 Resource usage: 1 CPU, 1 GB memory container
 
 Testing
 
-Verified working locally via Docker
+Fully tested locally using Docker
 
-Verified working in cloud via Azure public IP
+Cloud API verified using Azure public IP
 
-Confirmed expected error handling when key missing or text empty
+Verified error handling for missing/invalid keys
 
 6. What’s Next
 
-Add a frontend UI (React or simple HTML)
+Add a frontend UI
 
-Add PDF / DOCX uploading for summarization
+Add PDF / DOCX uploading
 
-Add authentication tokens for users
+Add user authentication
 
-Add multi-paragraph or multi-section structured summaries
+Add structured multi-section summaries
 
-Add rate limiting and usage analytics
+Add rate limiting and analytics
 
-Deploy using Azure App Service or Kubernetes for autoscaling
+Deploy using Azure App Service or Kubernetes
 
 7. Links
-GitHub Repository
 
+GitHub Repository:
 https://github.com/cosettemilla/gemini-summarizer
 
-Public Cloud Endpoint (Live API)
+Public Cloud Endpoint:
 http://<YOUR_CONTAINER_IP>:8080/summarize
