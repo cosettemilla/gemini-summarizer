@@ -1,4 +1,4 @@
-## Gemini Text Summarizer — Case Study
+## Gemini Text Summarizer: Systems Final Project 
 ### 1. Executive Summary
 #### Problem
 Students, researchers, and professionals frequently work with long academic texts, articles, and research documents. Manually summarizing these materials is slow, mentally exhausting, and inefficient—especially when dealing with multiple readings or dense technical content. Many people do not have access to advanced tools that can quickly distill large passages into clear, concise summaries, creating a need for a simple, accessible, and reliable text-summarization solution.
