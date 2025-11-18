@@ -73,7 +73,7 @@ Hello this is a test
 Output:
 { "summary": "This is a test message." }
 
-Example:
+Sample Outputs:
 <img width="1069" height="357" alt="Screenshot 2025-11-17 at 8 39 58 PM" src="https://github.com/user-attachments/assets/2d123045-db06-4cc6-ac5c-34f34416d68b" />
 
 
