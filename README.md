@@ -12,7 +12,7 @@ Course Concepts Used: This project applies several core system concepts from the
 Architecture Diagram
 <img width="1536" height="1024" alt="ChatGPT Image Nov 17, 2025, 08_46_43 PM" src="https://github.com/user-attachments/assets/95a94a1f-1d2f-45cd-adec-ec863f3eca77" />
 
-Data/Models/Services: The system relies on the Google Gemini API (gemini-2.0-flash), a cloud-hosted text-generation model provided through the Google Generative AI service under Google’s AI Studio Terms of Service. All input data consists of user-provided text sent as a simple JSON string, and no data is stored or logged on disk—summaries are generated in real time and returned as lightweight JSON responses. The application itself is a Flask REST API running inside a Docker container, exposed through two endpoints (`/health` and `/summarize`) and deployed on Azure Container Instances, with the container image stored in Azure Container Registry. Secrets such as the Gemini API key are passed
+Data/Models/Services: The system relies on the Google Gemini API (gemini-2.0-flash), a cloud-hosted text-generation model provided through the Google Generative AI service under Google’s AI Studio Terms of Service. All input data consists of user-provided text sent as a simple JSON string, and no data is stored or logged on disk—summaries are generated in real time and returned as lightweight JSON responses. The application itself is a Flask REST API running inside a Docker container, exposed through two endpoints /health and /summarize and deployed on Azure Container Instances, with the container image stored in Azure Container Registry. Secrets such as the Gemini API key are passed
 
 ### 3. How to Run (Local)
 #### 1. Create Your .env File
