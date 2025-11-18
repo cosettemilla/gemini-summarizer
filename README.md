@@ -34,24 +34,16 @@ Azure Container Instances: Simple container hosting without managing servers.
 Gemini API: High-quality summarization with minimal setup.
 
 #### Alternatives Considered
-AWS ECS / Lambda – more complex for this project
-Local LLMs – require GPU, too heavy
-VM hosting – less portable than containers
+AWS ECS / Lambda – more complex for this project, Local LLMs – require GPU, too heavy, VM hosting – less portable than containers
 
 #### Tradeoffs
-Cloud cost vs. local execution
-Single-container simplicity vs. limited autoscaling
-No database = low complexity but no persistent storage
+Cloud cost vs. local execution, Single-container simplicity vs. limited autoscaling, No database = low complexity but no persistent storage
 
 #### Security / Privacy
-API key stored in environment variables
-No user text stored on disk
-No PII retained
+API key stored in environment variables, No user text stored on disk, No PII retained
 
 #### Operations
-Logs accessible via az container logs
-Automatic restarts via ACI
-Cold starts when redeployed
+Logs accessible via az container logs, Automatic restarts via ACI, Cold starts when redeployed
 
 ### 5. Results & Evaluation
 #### Sample Output
@@ -62,21 +54,13 @@ Output:
 { "summary": "This is a test message." }
 
 #### Performance
-Latency: ~300–700ms (Gemini API dependent)
-Container: 1 CPU, 1 GB RAM
+Latency: ~300–700ms (Gemini API dependent), Container: 1 CPU, 1 GB RAM
 
 #### Testing
-Local Docker testing
-Cloud testing with Azure public IP
-Verified error handling (missing key, empty text)
+Local Docker testing, Cloud testing with Azure public IP, Verified error handling (missing key, empty text)
 
 ### 6. What’s Next
-Add a frontend UI
-Add PDF/DOCX upload summarization
-Add API authentication tokens
-Add structured multi-section summaries
-Add usage analytics & rate limiting
-Deploy to App Service or Kubernetes for scaling
+Add a frontend UI, Add PDF/DOCX upload summarization, Add API authentication tokens, Add structured multi-section summaries, Add usage analytics & rate limiting, Deploy to App Service or Kubernetes for scaling
 
 ### 7. Links
 GitHub Repository: https://github.com/cosettemilla/gemini-summarizer
