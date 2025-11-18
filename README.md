@@ -87,7 +87,7 @@ Latency: ~300–700ms (Gemini API dependent), Container: 1 CPU, 1 GB RAM
 Local Docker testing, Cloud testing with Azure public IP, Verified error handling (missing key, empty text)
 
 ### 6. What’s Next
-Add a frontend UI, Add PDF/DOCX upload summarization, Add API authentication tokens, Add structured multi-section summaries, Add usage analytics & rate limiting, Deploy to App Service or Kubernetes for scaling
+Right now, the system only summarizes plain text sent in JSON. A major next step would be enabling the API to accept full PDFs, Word documents, and academic papers for automatic extraction and summarization. This matters because most academic content is stored in PDF or DOCX, not raw text. A summarizer that requires copying and pasting text is useful, but a summarizer that accepts whole documents is far more powerful and realistic.
 
 ### 7. Links
 GitHub Repository: https://github.com/cosettemilla/gemini-summarizer
