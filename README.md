@@ -15,17 +15,37 @@ Architecture Diagram
 (Add your architecture PNG to /assets and embed it here.)
 
 ### 3. How to Run (Local)
-#### Set your environment variable
-export GEMINI_API_KEY="your_key_here"
+#### 1. Create Your .env File
+Copy the example file:
 
-#### Build
+cp .env.example .env
+
+Open .env and insert your Gemini API key:
+
+GEMINI_API_KEY=your_key_here
+
+#### 2. Build the Docker Image
 docker build -t gemini-api .
 
-#### Run
-docker run -p 8080:8080 --env GEMINI_API_KEY=$GEMINI_API_KEY gemini-api
+#### 3. Run the Container (loads env variables)
+docker run -p 8080:8080 --env-file .env gemini-api
 
-#### Health Check
+#### 4. Health Check
 curl http://localhost:8080/health
+
+Expected response:
+
+{"status": "ok"}
+
+#### 5. Test Summarization
+curl -X POST http://localhost:8080/summarize \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Hello this is a test"}'
+
+
+Expected output:
+
+{"summary": "This is a test message."}
 
 ### 4. Design Decisions
 #### Why These Tools?
