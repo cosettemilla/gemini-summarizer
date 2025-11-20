@@ -64,11 +64,9 @@ Hello this is a test
 Output:
 { "summary": "This is a test message." }
 
-<img width="1069" height="357" alt="Screenshot 2025-11-17 at 8 39 58 PM" src="https://github.com/user-attachments/assets/2d123045-db06-4cc6-ac5c-34f34416d68b" />
+<img width="886" height="416" alt="Screenshot 2025-11-20 at 3 38 10 PM" src="https://github.com/user-attachments/assets/34145b97-45b0-4d4b-a457-6e3642ee9fca" />
 
-
-<img width="1074" height="323" alt="Screenshot 2025-11-17 at 8 40 03 PM" src="https://github.com/user-attachments/assets/547cde39-3814-4855-b61b-14f5352bc4dd" />
-
+<img width="759" height="162" alt="Screenshot 2025-11-20 at 3 38 16 PM" src="https://github.com/user-attachments/assets/d7a319a9-1610-4ca6-bad3-182ded8f0dcc" />
 
 Performance:  Latency: ~300–700ms (Gemini API dependent), Container: 1 CPU, 1 GB RAM
 
