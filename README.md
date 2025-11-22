@@ -14,25 +14,12 @@ The entire system is containerized with Docker for reproducibility and deployed 
 ## 2. System Overview
 
 ### Course Concepts Used  
-This project integrates several core concepts from the course:
-
-- **Docker Containerization** — ensuring reproducible execution across environments  
-- **Microservices / REST APIs** — clean separation of concerns through a Flask API  
-- **Cloud Deployment (Azure Container Instances)** — serverless container hosting  
-- **Secrets Management** — environment variables instead of hard-coded keys  
-- **DevOps Practices** — consistent build/run commands and container workflows  
-- **External API Integration** — connecting to the Google Gemini LLM API  
-
-These combine into a full pipeline: local dev → containerization → cloud deployment.
-
----
+This project applies several core system concepts from the course. It uses Docker containerization to package the application into a portable, reproducible environment. It demonstrates cloud deployment using Azure Container Registry (ACR) and Azure Container Instances (ACI) to run the service without managing virtual machines. The project follows the microservices architecture model by exposing a lightweight Flask REST API with clearly defined endpoints. It uses environment-based secrets management to securely handle API keys, reflecting best practices in systems security. Finally, it incorporates DevOps principles, including consistent build/run workflows and infrastructure-as-code–style deployment steps, to create a complete, end-to-end system from local development to cloud hosting.
 
 ### Architecture Diagram  
-*(Image stored in /assets — example shown below)*  
+The following diagram illustrates the full system architecture, including the flow from user input → Flask API → Gemini API → summarized output.
 
-<img width="700" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/95a94a1f-1d2f-45cd-adec-ec863f3eca77">
-
----
+<img src="assets/architecture.png" width="600">
 
 ### Data / Models / Services  
 The system relies entirely on **real-time API calls** rather than local datasets.
