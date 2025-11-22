@@ -22,134 +22,58 @@ The following diagram illustrates the full system architecture, including the fl
 <img src="assets/architecture.png" width="600">
 
 ### Data / Models / Services  
-The system relies entirely on **real-time API calls** rather than local datasets.
-
-- **Model:** Google Gemini (gemini-2.0-flash)  
-- **Format:** JSON request (`{"text": "..."}`) and JSON response  
-- **License:** Google Generative AI terms via AI Studio  
-- **Service:** Flask microservice inside a Docker container  
-- **Cloud:** Azure Container Registry + Azure Container Instances  
-- **Storage:** No user text or data is saved — everything is processed in memory  
-- **Secrets:** API key stored in `.env` and injected at runtime  
-
----
+This project uses the Google Gemini 2.0 Flash model as its core text-summarization engine. The model is accessed through the Google Generative AI API, which is hosted entirely in the cloud and licensed under Google’s AI Studio Terms of Service. All input data comes from the user in the form of raw text strings sent as JSON to the /summarize endpoint, and no data is persisted or logged on disk. The service returns a small, structured JSON response containing the generated summary, and all processing occurs dynamically per request—no datasets, corpora, or model weights are stored locally. The application itself runs as a Docker-containerized Flask microservice, deployed on Azure Container Instances, and it securely loads its required credentials through environment variables rather than bundled configuration files.
 
 ## 3. How to Run (Local)
-
-### 1. Create your `.env` file  
-Copy the example:
-
-```bash
+### Docker
+1. Create your .env file
 cp .env.example .env
-Then edit .env:
 
-ini
-Copy code
+Open .env and paste in a valid Gemini API key:
 GEMINI_API_KEY=your_key_here
+
 2. Build the Docker image
-bash
-Copy code
-docker build -t gemini-api .
-3. Run the container
-bash
-Copy code
-docker run -p 8080:8080 --env-file .env gemini-api
-4. Health Check
-bash
-Copy code
-curl http://localhost:8080/health
-Expected:
+docker build -t gemini-app .
 
-json
-Copy code
-{"status": "ok"}
-5. Summarize Text
-bash
-Copy code
-curl -X POST http://localhost:8080/summarize \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Hello this is a test"}'
-Expected:
+3. Run the app
+docker run --rm -p 8080:8080 --env-file .env gemini-app
 
-json
-Copy code
-{"summary": "This is a test message."}
-4. Design Decisions
-Why This Approach
-Docker ensures reproducibility, Flask keeps the API lightweight, and Azure Container Instances make cloud deployment simple without provisioning VMs. Gemini provides high-quality summarization while avoiding the heavy compute required for hosting local LLMs.
-Alternatives like AWS ECS/Lambda or self-hosting models were rejected due to complexity, cost, or hardware requirements.
+4. Use the Web UI
+Open a browser and visit: http://localhost:8080
+You'll see your summarizer page where you can paste text and click Summarize
 
-Tradeoffs
-Performance: Reliant on Gemini API latency (300–700ms).
+## 4. Design Decisions
+### Why This Concept? 
+I chose to build this project using Docker, Flask, and Azure Container Instances because I wanted something simple, reliable, and easy for anyone to run—without needing to manage servers or complicated infrastructure. Docker gave me a clean way to package everything so it works the same on every machine, and Flask was the perfect lightweight framework for a small summarization API. I looked at alternatives like deploying on a full VM, using Azure App Service, or even running a local LLM, but each option added unnecessary cost, setup time, or hardware requirements. By using the Gemini API instead of hosting my own model, I kept the project fast, low-maintenance, and accessible for students or researchers who just need a straightforward way to summarize text.
+### Tradeoffs 
+For this project, I intentionally chose a design that prioritizes simplicity over maximum performance or scalability. Using Azure Container Instances keeps deployment incredibly easy, but it does limit the system to a single container without autoscaling, which could become a bottleneck under heavy load. Relying on the Gemini API avoids the huge complexity of hosting my own model, yet it introduces recurring API costs and adds some latency because every request has to travel to Google’s servers. The codebase stays small and easy to maintain thanks to Flask and Docker, but that also means the system doesn’t include advanced features like background processing, caching, or storage. Overall, the tradeoffs were worth it for a student project: the system is clean, minimal, and reliable—but not designed for large-scale production traffic.
+### Security/Privacy
+Because this project handles user-submitted text, I kept security simple but intentional. All secrets—especially the Gemini API key—are stored in environment variables rather than hard-coded anywhere in the code or committed to GitHub. The API only accepts plain text input and performs basic validation to avoid processing unexpected data types. No personally identifiable information (PII) is ever saved: the service does not write user content to disk, does not log request bodies, and does not persist summaries. Everything is processed in memory and returned immediately. While this setup is appropriate for a lightweight academic tool, stronger production safeguards—like user authentication, encrypted secret storage, and rate limiting—could be added in future iterations.
+### Ops 
+Operationally, this project is intentionally lightweight, so the focus is on simplicity rather than advanced DevOps tooling. All application logs go directly to container stdout, which makes them easy to view using docker logs locally or az container logs when deployed in Azure. There is no built-in metrics system, so performance insights come from container resource usage in the Azure portal. Because the app runs as a single container, scaling is limited—there’s no automatic load balancing or horizontal scaling, and cold starts can occur when the container restarts. The design works well for a demo or personal academic tool, but it does mean the system has known limitations, such as limited throughput, no autoscaling, and minimal monitoring compared to production-grade deployments.
 
-Cost: API usage cost + Azure compute.
+## Results and Evaluation 
+<img width="1130" height="418" alt="Screenshot 2025-11-22 at 3 47 32 PM" src="https://github.com/user-attachments/assets/60cb104c-fb04-4150-9468-cf1af6f394cd" />
 
-Simplicity vs. Scalability: Single container, no autoscaling.
+<img width="1470" height="478" alt="Screenshot 2025-11-22 at 3 48 38 PM" src="https://github.com/user-attachments/assets/68b819f2-e87c-4b7f-9280-783390441b03" />
 
-Maintainability: Very small codebase, easy to extend, but minimal logging/observability.
+<img width="783" height="399" alt="Screenshot 2025-11-22 at 3 47 55 PM" src="https://github.com/user-attachments/assets/a39e9422-d31a-43e5-a46d-fdd17c001ae0" />
 
-Security & Privacy
-Secrets stored in .env, not in GitHub
+<img width="729" height="484" alt="Screenshot 2025-11-22 at 3 48 00 PM" src="https://github.com/user-attachments/assets/82554549-945d-4b98-8797-b404fac9f869" />
 
-No text stored on disk
+### Brief Performance Notes and Resource Footprint
+The system performs efficiently for a lightweight academic tool. Each summarization request typically completes in 300–700 ms, depending mostly on the latency of the Google Gemini API rather than the container itself. The Azure container runs on 1 CPU and 1 GB of RAM, which is more than enough for a Flask API handling one request at a time. Locally, Docker uses minimal resources, and the service remains responsive even on modest hardware. Because the model runs remotely on Gemini, the container has a very small resource footprint, it primarily handles request routing and response formatting.
 
-Only minimal request data is processed
+### Validation, tests performed and outcomes
+To validate the system end to end, I performed multiple tests using both the API and the full web interface. First, I verified that the Docker container successfully built and ran locally, and that the /health endpoint returned a healthy response. Then, using the web UI, I entered a very large block of real-world text, a full presidential address, as shown in the first screenshot. This tested the system’s ability to handle long inputs, UI rendering, and form submission. After clicking Summarize, the application correctly routed the text through the Flask server to the Gemini API and returned a well structured, coherent summary, visible in the second screenshot. This confirms that the frontend, backend, container, and external API are all functioning together correctly. These tests demonstrate that the application is stable, handles large academic style documents, and reliably produces accurate summaries.
 
-No PII retention
+## 6. What's Next 
+### Planned improvements, refactors, and stretch features.
+A key next step is adding support for PDF and DOCX uploads, allowing users to summarize full academic papers without copying and pasting text. I also plan to refine the web UI with features like drag-and-drop uploads and multiple summary styles (short, detailed, bullet points). On the backend, future upgrades could include batch summarization, topic extraction, and deploying to a more scalable environment like Azure App Service. Adding basic authentication and usage monitoring would also make the tool more robust for broader real-world use.
 
-Operations
-Logs visible with docker logs or az container logs
-
-ACI auto-restarts on failure
-
-No autoscaling or deep metrics (a known limitation)
-
-5. Results & Evaluation
-Example Summary Test
-Input:
-
-kotlin
-Copy code
-Hello this is a test
-Output:
-
-json
-Copy code
-{ "summary": "This is a test message." }
-Screenshots
-<img width="886" alt="Screenshot 1" src="https://github.com/user-attachments/assets/34145b97-45b0-4d4b-a457-6e3642ee9fca" /> <img width="759" alt="Screenshot 2" src="https://github.com/user-attachments/assets/d7a319a9-1610-4ca6-bad3-182ded8f0dcc" />
-Performance
-Latency: 300–700ms (Gemini dependent)
-
-Container resources: 1 CPU, 1 GB RAM
-
-Testing
-Local Docker tests
-
-Cloud deployment tests
-
-Validation for missing key, empty text, etc.
-
-6. What’s Next
-The biggest improvement would be adding document ingestion: PDFs, DOCX, academic papers, and multi-page uploads.
-This would transform the tool from a text-only summarizer into a real academic assistant capable of summarizing full research articles automatically — the most common real-world use case.
-
-Future enhancements:
-
-Web UI for drag-and-drop uploads
-
-User accounts + rate limiting
-
-Multi-section structured summaries
-
-Deployment on Azure App Service or Kubernetes for autoscaling
-
-7. Links
+## 7) Links 
 GitHub Repository:
 https://github.com/cosettemilla/gemini-summarizer
 
 Public Cloud API Endpoint:
 http://135.119.248.195:8080/summarize
-
-yaml
-Copy code
