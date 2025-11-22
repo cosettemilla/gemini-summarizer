@@ -33,7 +33,7 @@ This project uses the Google Gemini 2.0 Flash model as its core text-summarizati
 
 > cp .env.example .env
 
-Open .env and paste in a valid Gemini API key: GEMINI_API_KEY=your_key_here
+Open .env and paste in a valid Gemini API key: GEMINI_API_KEY="your_key_here"
 
 3. Build the Docker image
 > docker build -t gemini-app .
