@@ -36,10 +36,10 @@ Open .env and paste in a valid Gemini API key:
 GEMINI_API_KEY=your_key_here
 
 2. Build the Docker image
-docker build -t gemini-app .
+> docker build -t gemini-app .
 
 3. Run the app
-docker run --rm -p 8080:8080 --env-file .env gemini-app
+> docker run --rm -p 8080:8080 --env-file .env gemini-app
 
 4. Use the Web UI
 Open a browser and visit: http://localhost:8080
