@@ -54,13 +54,19 @@ Operationally, this project is intentionally lightweight, so the focus is on sim
 
 ## 5. Results and Evaluation 
 ### Screenshots Testing the App
+Docker Running: 
 <img width="1130" height="418" alt="Screenshot 2025-11-22 at 3 47 32 PM" src="https://github.com/user-attachments/assets/60cb104c-fb04-4150-9468-cf1af6f394cd" />
 
+App Working Through Web URL:
 <img width="1470" height="478" alt="Screenshot 2025-11-22 at 3 48 38 PM" src="https://github.com/user-attachments/assets/68b819f2-e87c-4b7f-9280-783390441b03" />
 
 <img width="783" height="399" alt="Screenshot 2025-11-22 at 3 47 55 PM" src="https://github.com/user-attachments/assets/a39e9422-d31a-43e5-a46d-fdd17c001ae0" />
 
 <img width="729" height="484" alt="Screenshot 2025-11-22 at 3 48 00 PM" src="https://github.com/user-attachments/assets/82554549-945d-4b98-8797-b404fac9f869" />
+
+Cloud API Test (via CURL):
+<img width="692" height="208" alt="Screenshot 2025-11-22 at 4 48 13 PM" src="https://github.com/user-attachments/assets/532a3d0a-fabb-425d-ae66-7fac5b6d711f" />
+
 
 ### Brief Performance Notes and Resource Footprint
 The system performs efficiently for a lightweight academic tool. Each summarization request typically completes in 300–700 ms, depending mostly on the latency of the Google Gemini API rather than the container itself. The Azure container runs on 1 CPU and 1 GB of RAM, which is more than enough for a Flask API handling one request at a time. Locally, Docker uses minimal resources, and the service remains responsive even on modest hardware. Because the model runs remotely on Gemini, the container has a very small resource footprint, it primarily handles request routing and response formatting.
