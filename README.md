@@ -52,7 +52,8 @@ Because this project handles user-submitted text, I kept security simple but int
 ### Ops 
 Operationally, this project is intentionally lightweight, so the focus is on simplicity rather than advanced DevOps tooling. All application logs go directly to container stdout, which makes them easy to view using docker logs locally or az container logs when deployed in Azure. There is no built-in metrics system, so performance insights come from container resource usage in the Azure portal. Because the app runs as a single container, scaling is limited—there’s no automatic load balancing or horizontal scaling, and cold starts can occur when the container restarts. The design works well for a demo or personal academic tool, but it does mean the system has known limitations, such as limited throughput, no autoscaling, and minimal monitoring compared to production-grade deployments.
 
-## Results and Evaluation 
+## 5. Results and Evaluation 
+### Screenshots Testing the App
 <img width="1130" height="418" alt="Screenshot 2025-11-22 at 3 47 32 PM" src="https://github.com/user-attachments/assets/60cb104c-fb04-4150-9468-cf1af6f394cd" />
 
 <img width="1470" height="478" alt="Screenshot 2025-11-22 at 3 48 38 PM" src="https://github.com/user-attachments/assets/68b819f2-e87c-4b7f-9280-783390441b03" />
