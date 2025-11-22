@@ -30,12 +30,10 @@ This project uses the Google Gemini 2.0 Flash model as its core text-summarizati
 
 ### Docker
 1. Create your .env file
-cp .env.example .env
+> cp .env.example .env
+Open .env and paste in a valid Gemini API key: GEMINI_API_KEY=your_key_here
 
-Open .env and paste in a valid Gemini API key:
-GEMINI_API_KEY=your_key_here
-
-2. Build the Docker image
+3. Build the Docker image
 > docker build -t gemini-app .
 
 3. Run the app
