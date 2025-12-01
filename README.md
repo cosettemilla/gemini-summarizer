@@ -45,8 +45,8 @@ This returns:
 {"status": "ok"}
 
 #### 4. Use the Web UI
-
 Open your browser and go to: http://localhost:8080
+
 ---
 
 ## 4. Design Decisions
