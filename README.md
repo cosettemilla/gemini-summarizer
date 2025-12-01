@@ -30,7 +30,6 @@ This project uses the Google Gemini 2.0 Flash model as its core text-summarizati
 ### Docker
 1. Build the image
 
-```sh
 docker build -t gemini-app .
 
 
