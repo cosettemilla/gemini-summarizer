@@ -25,12 +25,15 @@ This project uses the Google Gemini 2.0 Flash model as its core text-summarizati
 
 ---
 
-## 3. How to Run (Local)
+### 3. How to Run (Local)
 
-### Docker
-#### 1. Build the image
+#### 1. Create your `.env` file
+Copy the example file:
 
-docker build -t gemini-app .
+```sh
+cp .env.example .env
+
+GEMINI_API_KEY=your_key_here
 
 #### 2. Run the app (single command)
 
