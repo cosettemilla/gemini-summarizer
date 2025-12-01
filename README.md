@@ -6,8 +6,7 @@
 Students, researchers, and professionals frequently work with long academic papers, articles, and dense research documents. Manually summarizing these materials is slow, tiring, and inefficient—especially when dealing with multiple readings. There is a clear need for a simple, reliable tool that quickly converts long text into clear, concise summaries.
 
 ### Solution  
-This project provides a lightweight, cloud-hosted text-summarization service powered by the Google Gemini API. Users send text to a Flask REST API, which returns an AI-generated summary within seconds.  
-The entire system is containerized with Docker for reproducibility and deployed on Azure Container Instances for simple cloud hosting without managing servers.
+This project provides a lightweight, cloud-hosted text-summarization service powered by the Google Gemini API. Users send text to a Flask REST API, which returns an AI-generated summary within seconds.  The entire system is containerized with Docker for reproducibility and deployed on Azure Container Instances for simple cloud hosting without managing servers.
 
 ---
 
@@ -29,22 +28,25 @@ This project uses the Google Gemini 2.0 Flash model as its core text-summarizati
 ## 3. How to Run (Local)
 
 ### Docker
-1. Create your .env file
+1. Build the image
+docker build -t gemini-app .
 
-> cp .env.example .env
+2. Run the app (single command)
+docker run --rm -p 8080:8080 --env-file .env gemini-app
 
-Open .env and paste in a valid Gemini API key: GEMINI_API_KEY="your_key_here"
+3. Health check (optional)
+curl http://localhost:8080/health
 
-3. Build the Docker image
-> docker build -t gemini-app .
 
-3. Run the app
-> docker run --rm -p 8080:8080 --env-file .env gemini-app
+This returns:
+
+{"status": "ok"}
 
 4. Use the Web UI
-Open a browser and visit: http://localhost:8080
-You'll see your summarizer page where you can paste text and click Summarize
 
+Open your browser and go to:
+
+http://localhost:8080
 ---
 
 ## 4. Design Decisions
@@ -53,13 +55,13 @@ You'll see your summarizer page where you can paste text and click Summarize
 I chose to build this project using Docker, Flask, and Azure Container Instances because I wanted something simple, reliable, and easy for anyone to run—without needing to manage servers or complicated infrastructure. Docker gave me a clean way to package everything so it works the same on every machine, and Flask was the perfect lightweight framework for a small summarization API. I looked at alternatives like deploying on a full VM, using Azure App Service, or even running a local LLM, but each option added unnecessary cost, setup time, or hardware requirements. By using the Gemini API instead of hosting my own model, I kept the project fast, low-maintenance, and accessible for students or researchers who just need a straightforward way to summarize text.
 
 ### Tradeoffs 
-For this project, I intentionally chose a design that prioritizes simplicity over maximum performance or scalability. Using Azure Container Instances keeps deployment incredibly easy, but it does limit the system to a single container without autoscaling, which could become a bottleneck under heavy load. Relying on the Gemini API avoids the huge complexity of hosting my own model, yet it introduces recurring API costs and adds some latency because every request has to travel to Google’s servers. The codebase stays small and easy to maintain thanks to Flask and Docker, but that also means the system doesn’t include advanced features like background processing, caching, or storage. Overall, the tradeoffs were worth it for a student project: the system is clean, minimal, and reliable—but not designed for large-scale production traffic.
+For this project, I intentionally chose a design that prioritizes simplicity over maximum performance or scalability. Using Azure Container Instances keeps deployment incredibly easy, but it does limit the system to a single container without autoscaling, which could become a bottleneck under heavy load. Relying on the Gemini API avoids the huge complexity of hosting my own model, yet it introduces recurring API costs and adds some latency because every request has to travel to Google’s servers. The codebase stays small and easy to maintain thanks to Flask and Docker, but that also means the system doesn’t include advanced features like background processing, caching, or storage. Overall, the tradeoffs were worth it for a student project: the system is clean, minimal, and reliable, but not designed for large-scale production traffic.
 
 ### Security/Privacy
-Because this project handles user-submitted text, I kept security simple but intentional. All secrets—especially the Gemini API key—are stored in environment variables rather than hard-coded anywhere in the code or committed to GitHub. The API only accepts plain text input and performs basic validation to avoid processing unexpected data types. No personally identifiable information (PII) is ever saved: the service does not write user content to disk, does not log request bodies, and does not persist summaries. Everything is processed in memory and returned immediately. While this setup is appropriate for a lightweight academic tool, stronger production safeguards—like user authentication, encrypted secret storage, and rate limiting—could be added in future iterations.
+Because this project handles user-submitted text, I kept security simple but intentional. All secrets, especially the Gemini API key, are stored in environment variables rather than hard-coded anywhere in the code or committed to GitHub. The API only accepts plain text input and performs basic validation to avoid processing unexpected data types. No personally identifiable information (PII) is ever saved: the service does not write user content to disk, does not log request bodies, and does not persist summaries. Everything is processed in memory and returned immediately. While this setup is appropriate for a lightweight academic tool, stronger production safeguards—like user authentication, encrypted secret storage, and rate limiting, could be added in future iterations.
 
 ### Ops 
-Operationally, this project is intentionally lightweight, so the focus is on simplicity rather than advanced DevOps tooling. All application logs go directly to container stdout, which makes them easy to view using docker logs locally or az container logs when deployed in Azure. There is no built-in metrics system, so performance insights come from container resource usage in the Azure portal. Because the app runs as a single container, scaling is limited—there’s no automatic load balancing or horizontal scaling, and cold starts can occur when the container restarts. The design works well for a demo or personal academic tool, but it does mean the system has known limitations, such as limited throughput, no autoscaling, and minimal monitoring compared to production-grade deployments.
+Operationally, this project is intentionally lightweight, so the focus is on simplicity rather than advanced DevOps tooling. All application logs go directly to container stdout, which makes them easy to view using docker logs locally or az container logs when deployed in Azure. There is no built in metrics system, so performance insights come from container resource usage in the Azure portal. Because the app runs as a single container, scaling is limited—there’s no automatic load balancing or horizontal scaling, and cold starts can occur when the container restarts. The design works well for a demo or personal academic tool, but it does mean the system has known limitations, such as limited throughput, no autoscaling, and minimal monitoring compared to production grade deployments.
 
 ---
 
@@ -100,4 +102,4 @@ GitHub Repository:
 https://github.com/cosettemilla/gemini-summarizer
 
 Public Cloud API Endpoint:
-http://135.119.248.195:8080/summarize
+http://130.213.161.28:8080 
