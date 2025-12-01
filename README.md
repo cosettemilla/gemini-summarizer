@@ -41,11 +41,11 @@ GEMINI_API_KEY=your_key_here
 
 #### 3. Health check (optional)
 
-curl http://localhost:8080/health
+`curl http://localhost:8080/health`
 
 This returns:
 
-{"status": "ok"}
+`{"status": "ok"}`
 
 #### 4. Use the Web UI
 Open your browser and go to: http://localhost:8080
