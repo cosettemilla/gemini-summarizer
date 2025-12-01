@@ -29,18 +29,21 @@ This project uses the Google Gemini 2.0 Flash model as its core text-summarizati
 
 ### Docker
 1. Build the image
-docker build -t gemini-app .
+
+```docker build -t gemini-app .
 
 2. Run the app (single command)
-docker run --rm -p 8080:8080 --env-file .env gemini-app
+
+```docker run --rm -p 8080:8080 --env-file .env gemini-app
 
 3. Health check (optional)
-curl http://localhost:8080/health
+
+```curl http://localhost:8080/health
 
 
 This returns:
 
-{"status": "ok"}
+```{"status": "ok"}
 
 4. Use the Web UI
 
