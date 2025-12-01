@@ -35,11 +35,16 @@ Copy the example file:
 Put your gemini key into the .env file  
 GEMINI_API_KEY=your_key_here
 
-#### 2. Run the app (single command)
+#### 2. Build the image in docker 
+
+`docker build -t gemini-app .
+
+
+#### 3. Run the app (single command)
 
 `docker run --rm -p 8080:8080 --env-file .env gemini-app`
 
-#### 3. Health check (optional)
+#### 4. Health check (optional)
 
 `curl http://localhost:8080/health`
 
@@ -47,7 +52,7 @@ This returns:
 
 `{"status": "ok"}`
 
-#### 4. Use the Web UI
+#### 5. Use the Web UI
 Open your browser and go to: http://localhost:8080
 
 ---
