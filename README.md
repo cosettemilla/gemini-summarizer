@@ -16,7 +16,7 @@ This project provides a lightweight, cloud-hosted text-summarization service pow
 This project applies several core system concepts from the course. It uses Docker containerization to package the application into a portable, reproducible environment. It demonstrates cloud deployment using Azure Container Registry (ACR) and Azure Container Instances (ACI) to run the service without managing virtual machines. The project follows the microservices architecture model by exposing a lightweight Flask REST API with clearly defined endpoints. It uses environment-based secrets management to securely handle API keys, reflecting best practices in systems security. Finally, it incorporates DevOps principles, including consistent build/run workflows and infrastructure-as-code–style deployment steps, to create a complete, end-to-end system from local development to cloud hosting.
 
 ### Architecture Diagram  
-The following diagram illustrates the full system architecture, including the flow from user input → Flask API → Gemini API → summarized output.
+The diagram below shows the overall system flow: the user interacts with the web UI, which sends text to the containerized Flask “Summarize API.” The API calls the Google Gemini API to generate a summary, and the application runs inside Azure Container Instances.
 
 <img src="assets/architecture.png" width="600">
 
