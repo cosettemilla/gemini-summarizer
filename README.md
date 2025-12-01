@@ -37,7 +37,7 @@ GEMINI_API_KEY=your_key_here
 
 #### 2. Build the image in docker 
 
-`docker build -t gemini-app .
+`docker build -t gemini-app .`
 
 
 #### 3. Run the app (single command)
